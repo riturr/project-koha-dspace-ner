@@ -46,22 +46,23 @@ python "./src/main/python/registration_asistant_ner/training_data/__init__.py" "
 ### 5. Train a NER model for each entity
 
 ```bash
-python ".\src\main\python\registration_asistant_ner\training\__init__.py" \
-  "<suffix>_training_data.spacy" \
-  "<suffix>_test_data.spacy"
-```
+mkdir trained_models
 
-### 6. Evaluate the model
+# Train a model to recognize titles
+python -m spacy train train.cfg --custom.suffix "title" --paths.train ./title_training.spacy --paths.dev ./title_test.spacy --output "./trained_models/title_ner_model"
 
-```bash
-python ".\src\main\python\registration_asistant_ner\evaluation\__init__.py" \
-  "<suffix>_test_data.spacy" \
-  "<suffix>_model"
-```
+# Train a model to recognize names of authors
+python -m spacy train train.cfg --custom.suffix "authors" --paths.train ./authors_training.spacy --paths.dev ./authors_test.spacy --output "./trained_models/authors_ner_model"
 
-### 7. Run the model
+# Train a model to recognize year of publication
+python -m spacy train train.cfg --custom.suffix "year" --paths.train ./year_training.spacy --paths.dev ./year_test.spacy --output "./trained_models/year_ner_model"
 
-```bash
-python ".\src\main\python\registration_asistant_ner\__init__.py" \
-  "<suffix>_model"
+# Train a model to recognize names of advisors
+python -m spacy train train.cfg --custom.suffix "advisors" --paths.train ./advisors_training.spacy --paths.dev ./advisors_test.spacy --output "./trained_models/advisors_ner_model"
+
+# Train a model to recognize names of faculties
+python -m spacy train train.cfg --custom.suffix "faculty" --paths.train ./faculty_training.spacy --paths.dev ./faculty_test.spacy --output "./trained_models/faculty_ner_model"
+
+# Train a model to recognize names of programs (majors)
+python -m spacy train train.cfg --custom.suffix "program" --paths.train ./program_training.spacy --paths.dev ./program_test.spacy --output "./trained_models/program_ner_model"
 ```
