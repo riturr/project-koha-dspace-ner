@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mets:METS xmlns:mets="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/TR/xlink/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dim="http://www.dspace.org/xmlns/dspace/dim" PROFILE="DSPACE METS SIP Profile 1.0" LABEL="DSpace Item" OBJID="/xmlui/handle/123456789/957" ID="hdl:123456789/957" OBJEDIT="/xmlui/admin/item?itemID=d1ae4288-a9a5-4b17-ba23-a2dd610f06da">
+<mets:dmdSec GROUPID="group_dmd_0" ID="dmd_1">
+<mets:mdWrap OTHERMDTYPE="DIM" MDTYPE="OTHER">
+<mets:xmlData>
+<dim:dim dspaceType="ITEM">
+<dim:field qualifier="author" mdschema="dc" element="contributor">UMSA-CIDES</dim:field>
+<dim:field qualifier="accessioned" mdschema="dc" element="date">2010-04-28T21: 42:05 Z</dim:field>
+<dim:field qualifier="available" mdschema="dc" element="date">2010-04-28T21: 42:05 Z</dim:field>
+<dim:field qualifier="issued" mdschema="dc" element="date">2010-04-28T21: 42:05 Z</dim:field>
+<dim:field qualifier="issn" mdschema="dc" element="identifier">1994-9987</dim:field>
+<dim:field qualifier="uri" mdschema="dc" element="identifier">http://hdl.handle.net/123456789/957</dim:field>
+<dim:field qualifier="abstract" mdschema="dc" language="en_US" element="description">La Revista Umbrales N º 18 SE UNO circunscribe la Problemática de Género, Globalización y Desarrollo, atendiendo especialmente El Contexto Crítico Que Las Mujeres latinoamericanas afrontan, impelidas al reverso de las Naciones, Unidas Cuestiones Las Propias replantear Que les Hijo, En Un Escenario de Grandes Cambios neoliberales y desafíospost.</dim:field>
+<dim:field qualifier="iso" mdschema="dc" language="en_US" element="language">es</dim:field>
+<dim:field qualifier="ispartofseries" mdschema="dc" language="en_US" element="relation">Género y Desafíos post-neoliberales</dim:field>
+<dim:field qualifier="ispartofseries" mdschema="dc" language="en_US" element="relation">18</dim:field>
+<dim:field mdschema="dc" language="en_US" element="subject">ECONOMIA Feminista</dim:field>
+<dim:field mdschema="dc" language="en_US" element="subject">AMERICA LATINA</dim:field>
+<dim:field mdschema="dc" language="en_US" element="subject">GLOBALIZACION</dim:field>
+<dim:field mdschema="dc" language="en_US" element="subject">Feminismo</dim:field>
+<dim:field mdschema="dc" language="en_US" element="subject">GENERO</dim:field>
+<dim:field mdschema="dc" language="en_US" element="subject">Etnicidad</dim:field>
+<dim:field mdschema="dc" language="en_US" element="title">Género y Desafíos post-neoliberales</dim:field>
+<dim:field mdschema="dc" language="en_US" element="type">Otro</dim:field>
+</dim:dim>
+</mets:xmlData>
+</mets:mdWrap>
+</mets:dmdSec>
+<mets:fileSec>
+<mets:fileGrp USE="CONTENT">
+<mets:file GROUPID="group_file_279b0f5a-60db-43af-9d61-baba85d68037" CHECKSUM="623ad5be3cff672a9eff89555babdeea" MIMETYPE="application/pdf" SIZE="1314137" ID="file_279b0f5a-60db-43af-9d61-baba85d68037" CHECKSUMTYPE="MD5">
+<mets:FLocat LOCTYPE="URL" xlink:href="/xmlui/bitstream/handle/123456789/957/R-18.pdf?sequence=1&amp;isAllowed=y" xlink:type="locator" xlink:title="R-18.pdf"/>
+</mets:file>
+</mets:fileGrp>
+<mets:fileGrp USE="THUMBNAIL">
+<mets:file GROUPID="group_file_279b0f5a-60db-43af-9d61-baba85d68037" CHECKSUM="104031fc052be576b6fc9bb9c9ef8fd2" MIMETYPE="image/jpeg" SIZE="18520" ID="file_17360e4a-8316-4436-bf9e-0d0e7bb2aa5a" CHECKSUMTYPE="MD5">
+<mets:FLocat LOCTYPE="URL" xlink:label="IM Thumbnail" xlink:href="/xmlui/bitstream/handle/123456789/957/R-18.pdf.jpg?sequence=3&amp;isAllowed=y" xlink:type="locator" xlink:title="R-18.pdf.jpg"/>
+</mets:file>
+</mets:fileGrp>
+<mets:fileGrp USE="TEXT">
+<mets:file GROUPID="group_file_279b0f5a-60db-43af-9d61-baba85d68037" CHECKSUM="a1cf56cf1092775da639a87db2c9f8ea" MIMETYPE="text/plain" SIZE="562588" ID="file_4862d37a-1ae2-46e2-9619-2f95d5854df7" CHECKSUMTYPE="MD5">
+<mets:FLocat LOCTYPE="URL" xlink:label="Extracted text" xlink:href="/xmlui/bitstream/handle/123456789/957/R-18.pdf.txt?sequence=4&amp;isAllowed=y" xlink:type="locator" xlink:title="R-18.pdf.txt"/>
+</mets:file>
+</mets:fileGrp>
+</mets:fileSec>
+<mets:structMap LABEL="DSpace" TYPE="LOGICAL">
+<mets:div DMDID="dmd_1" TYPE="DSpace Item">
+<mets:div ID="div_2" TYPE="DSpace Content Bitstream">
+<mets:fptr FILEID="file_279b0f5a-60db-43af-9d61-baba85d68037"/>
+</mets:div>
+</mets:div>
+</mets:structMap>
+</mets:METS>
