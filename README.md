@@ -1,3 +1,9 @@
+# Overview
+
+This project contents the code to train and evaluate Named Entity Recognition (NER) models to extract metadata from PDF files of academic theses published by students of the Universidad Mayor de San Andrés (UMSA) in La Paz, Bolivia.
+
+# Training the models
+
 The project already includes the training data and the trained models under the `training_data` and `trained_models` directories, respectively. 
 
 If you want to train the models again, follow the steps below.
