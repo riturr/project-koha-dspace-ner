@@ -6,6 +6,7 @@ import os
 import lxml.etree as ET
 import logging
 from tqdm import tqdm
+from pandarallel import pandarallel
 
 from registration_asistant_ner.training_data.pdf_reader import get_text_from_page
 
@@ -17,6 +18,8 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 tqdm.pandas()
+
+pandarallel.initialize(progress_bar=True)
 
 def parse_xml(xml_file: Path) -> dict :
     """
@@ -67,10 +70,10 @@ def read_cover_page_text(pdf_file: str, **kwargs) -> str | None:
     """
     Read the text from the cover page of the PDF file.
     """
-    if not os.path.exists(pdf_file):
-        logger.warning(f"PDF file '{pdf_file}' not found.")
-        return None
     try:
+        if not os.path.exists(pdf_file):
+            logger.warning(f"PDF file '{pdf_file}' not found.")
+            return None
         return get_text_from_page(pdf_file, 0, **kwargs)
     except Exception as e:
         logger.error(f"Error reading cover page from '{pdf_file}': {e}")
@@ -107,8 +110,7 @@ def load_scraped_data(index_file, files_path, **kwargs) -> DataFrame:
     index_df = index_df.join(index_df['xml_file'].progress_apply(parse_xml).apply(pd.Series))
 
     # Read the text from the cover page of the PDF file
-    tessdata = kwargs.get("tessdata", None)
-    index_df['cover_page_text'] = index_df['pdf_file'].progress_apply(read_cover_page_text, tessdata=tessdata)
+    index_df['cover_page_text'] = index_df['pdf_file'].parallel_apply(read_cover_page_text)
 
     logger.info(f"Loaded {len(index_df)} records from '{index_file}'.")
 

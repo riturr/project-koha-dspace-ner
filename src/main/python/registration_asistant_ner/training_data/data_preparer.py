@@ -1,12 +1,26 @@
 import re
 
 from pandas import DataFrame, Series
+from pandarallel import pandarallel
 import unidecode
 from spacy.tokens.doc import Doc
 import logging
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+pandarallel.initialize(progress_bar=True)
+
+
+def correct_program(value: str) -> str:
+    # Add 'DE' to the program name if it is missing.
+    # CARRERA INFORMATICA -> CARRERA DE INFORMATICA
+    # CARRERA CONTADURIA -> CARRERA DE CONTADURIA
+    # and so on
+
+    if "CARRERA" in value and "CARRERA DE" not in value:
+        value = value.replace("CARRERA", "CARRERA DE")
+    return value
 
 
 def correct_data(value: str) -> str:
@@ -99,22 +113,33 @@ def prepare_data(data: DataFrame) -> DataFrame:
     # Missing dates are set to 0 so they will be filtered out.
     data['year'] = data['issued'].apply(lambda x: int(re.search(r'\d{4}', x).group(0)) if re.search(r'\d{4}', x) else 0)
     data = data[data['year'] >= 2010]
+    data['year'] = data['year'].astype(str)
 
     # Filter data based on the document type
     DOCUMENTS_TYPES_TO_KEEP = [
-    'Proyectos de Grado',
-    'Tesis de Grado',
-    'Tesis',
-    'Trabajo Dirigido',
-    'Proyecto de Grado',
-    'Tesis de Especialidad',
-    'Tesis de Maestría',
-    'Trabajos Dirigidos',
-    'PETAENG',
-    'Trabajos dirigidos'
+        'Proyectos de Grado',
+        'Tesis de Grado',
+        'Tesis',
+        'Trabajo Dirigido',
+        'Proyecto de Grado',
+        'Tesis de Especialidad',
+        'Tesis de Maestría',
+        'Trabajos Dirigidos',
+        'PETAENG',
+        'Trabajos dirigidos'
     ]
     data['document_type'] = data['breadcrumb'].apply(lambda b: b[-2])
     data = data[data['document_type'].isin(DOCUMENTS_TYPES_TO_KEEP)]
+
+    # Add faculty and program columns
+    data['faculty'] = (data['breadcrumb']
+                       .apply(lambda b: b[1])
+                       .apply(correct_data)
+                       .apply(upper_case))
+    data['program'] = (data['breadcrumb'].apply(lambda b: b[2])
+                       .apply(correct_data)
+                       .apply(upper_case)
+                       .apply(correct_program))
 
     # Generate permutations of the names
     data['authors'] = data['authors'].apply(permute_names)
@@ -175,8 +200,12 @@ def generate_doc_with_entities(row: dict, main_text_column: str, columns_to_matc
                 span = doc.char_span(start, end, label)
                 if span is not None:
                     spans.append(span)
-    doc.set_ents(spans)
-    return doc
+    try:
+        doc.set_ents(spans)
+        return doc
+    except Exception as e:
+        logger.warning(f"Error setting entities for the document: {e}")
+        return doc
 
 
 # TODO: Add unit tests for this function
@@ -190,8 +219,8 @@ def generate_training_data(data: DataFrame, from_columns: list[str]) -> Series:
     :param from_columns: List of columns to match. The entities will be extracted from these columns.
     :return: pandas Series with the Doc objects.
     """
-    training_df: Series = data.apply(
-        lambda row: generate_doc_with_entities(row, 'cover_page_text', ['authors', 'advisors']),
+    training_df: Series = data.parallel_apply(
+        lambda row: generate_doc_with_entities(row, 'cover_page_text', from_columns),
         axis=1,
         result_type='reduce'
     )
